@@ -11,11 +11,9 @@ export default function FilterBar() {
   const { filters, setFilters } = useTasks();
   const [searchInput, setSearchInput] = useState(filters.search || '');
 
-  const debouncedSearch = useCallback(
-    debounce((val) => setFilters({ search: val }), 350),
-    [setFilters]
-  );
-
+  const debouncedSearch = useRef(
+  debounce((val) => setFilters({ search: val }), 350)
+).current;
   useEffect(() => { debouncedSearch(searchInput); }, [searchInput, debouncedSearch]);
 
   // Sync if filters reset externally
